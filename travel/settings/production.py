@@ -34,7 +34,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent.parent
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = False
 
-ALLOWED_HOSTS = ['*', ]
+ALLOWED_HOSTS = ['find-route-service.herokuapp.com', ]
 
 # Application definition
 
@@ -158,94 +158,94 @@ STATIC_ROOT = BASE_DIR.joinpath('staticfiles')
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
-# -------------------------------------------------------- LOGGING settings
-# https://docs.djangoproject.com/en/3.2/topics/logging/
-LOGGING = {
-    'version': 1,
-    'disable_existing_loggers': False,
-    'formatters': {  # formatters - отвечает за то, каким образом будет выводиться сообщение
-        'verbose': {
-            'format':
-                '{levelname} {asctime} {module} {message}',
-            #   {levelname} - уровень данного сообщения
-            #   {asctime} - время
-            #   {module} - модуль из которого происходил запрос
-            #   {message} - сам запрос, который необходимо фиксировать
-            'style':
-                '{',
-        },
-        'simple': {
-            'format': '{levelname} {message}',
-            'style': '{',
-        },
-    },
-    'filters': {
-        # 'special': {
-        #     '()': 'project.logging.SpecialFilter',
-        #     'foo': 'bar',
-        # },
-        'require_debug_true': {  # require_debug_true - мы будем фиксировать логирование, когда DEBUG = True
-            '()': 'django.utils.log.RequireDebugTrue',
-        },
-    },
-    'handlers': {  # хэндлеры говорят о том, каким образом мы можем обрабатывать полученное сообщение
-        # куда их выводить, в консоль, в файл, на почту?
-        'console': {  # вывести в консоль
-            'level': 'INFO',
-            'filters': ['require_debug_true'],
-            'class': 'logging.StreamHandler',
-            'formatter': 'simple'
-        },
-        'file': {  # вывести в файл
-            'level': 'DEBUG',
-            'class': 'logging.FileHandler',
-            'filename': BASE_DIR.joinpath('log/application.log'),
-            'formatter': 'verbose',
-        },
-        # 'mail_admins': {  # послать по почте
-        #     'level': 'ERROR',
-        #     'class': 'django.utils.log.AdminEmailHandler',
-        #     'filters': ['special']
-        # }
-    },
-    'loggers': {  # что мы фактически фиксируем, и куда
-        'django.db.backends': {  # 'django.db.backends' - настройки фиксации логирования запросов в бд
-            'handlers': ['file'],  # в записываем в файл
-            'level': 'DEBUG',
-        },
-        'django.request': {  # 'django.request' - настройки фиксации логирования HTTP запросов
-            'handlers': ['file'],  # в записываем в файл
-            'level': 'DEBUG',
-            'propagate': False,
-        },
-        # 'django': {
-        #     'handlers': ['console'],
-        #     'propagate': True,
-        # },
-        # 'myproject.custom': {
-        #     'handlers': ['console', 'mail_admins'],
-        #     'level': 'INFO',
-        #     'filters': ['special']
-        # }
-    }
-}
-
-# ! Важный момент:
-# Здеесь мы будем фиксировать логирования, когда DEBUG = True
-# 'require_debug_true': {
-#             '()': 'django.utils.log.RequireDebugTrue',}
-
-# А здесь сообщаем куда будем записывать логи (файл log):
-# 'filename': BASE_DIR.joinpath('log/application.log'),
-
-# Если DEBUG = False и мы уже на боевом сервере, перешли в продакшн,
-# файл log (кужа мы бцдем записывать логи) всё равно должен быть
-
-# Steps:
-# 1. Добавляешь этот набор настроек в файл settings.py
-# 2. Корректируешь там, то что нужно (в этом варианте всё необходимое уже есть)
-# 3. Создаешь на уровне приложения папку log, и помещаешь туда пустой файл empty.txt (можно не совсем пустой)
-# 4. Наслаждаешься логгированием, если DEBUG = True
-
-# -------------------------------------------------------- LOGGING settings
+# # -------------------------------------------------------- LOGGING settings
+# # https://docs.djangoproject.com/en/3.2/topics/logging/
+# LOGGING = {
+#     'version': 1,
+#     'disable_existing_loggers': False,
+#     'formatters': {  # formatters - отвечает за то, каким образом будет выводиться сообщение
+#         'verbose': {
+#             'format':
+#                 '{levelname} {asctime} {module} {message}',
+#             #   {levelname} - уровень данного сообщения
+#             #   {asctime} - время
+#             #   {module} - модуль из которого происходил запрос
+#             #   {message} - сам запрос, который необходимо фиксировать
+#             'style':
+#                 '{',
+#         },
+#         'simple': {
+#             'format': '{levelname} {message}',
+#             'style': '{',
+#         },
+#     },
+#     'filters': {
+#         # 'special': {
+#         #     '()': 'project.logging.SpecialFilter',
+#         #     'foo': 'bar',
+#         # },
+#         'require_debug_true': {  # require_debug_true - мы будем фиксировать логирование, когда DEBUG = True
+#             '()': 'django.utils.log.RequireDebugTrue',
+#         },
+#     },
+#     'handlers': {  # хэндлеры говорят о том, каким образом мы можем обрабатывать полученное сообщение
+#         # куда их выводить, в консоль, в файл, на почту?
+#         'console': {  # вывести в консоль
+#             'level': 'INFO',
+#             'filters': ['require_debug_true'],
+#             'class': 'logging.StreamHandler',
+#             'formatter': 'simple'
+#         },
+#         'file': {  # вывести в файл
+#             'level': 'DEBUG',
+#             'class': 'logging.FileHandler',
+#             'filename': BASE_DIR.joinpath('log/application.log'),
+#             'formatter': 'verbose',
+#         },
+#         # 'mail_admins': {  # послать по почте
+#         #     'level': 'ERROR',
+#         #     'class': 'django.utils.log.AdminEmailHandler',
+#         #     'filters': ['special']
+#         # }
+#     },
+#     'loggers': {  # что мы фактически фиксируем, и куда
+#         'django.db.backends': {  # 'django.db.backends' - настройки фиксации логирования запросов в бд
+#             'handlers': ['file'],  # в записываем в файл
+#             'level': 'DEBUG',
+#         },
+#         'django.request': {  # 'django.request' - настройки фиксации логирования HTTP запросов
+#             'handlers': ['file'],  # в записываем в файл
+#             'level': 'DEBUG',
+#             'propagate': False,
+#         },
+#         # 'django': {
+#         #     'handlers': ['console'],
+#         #     'propagate': True,
+#         # },
+#         # 'myproject.custom': {
+#         #     'handlers': ['console', 'mail_admins'],
+#         #     'level': 'INFO',
+#         #     'filters': ['special']
+#         # }
+#     }
+# }
+#
+# # ! Важный момент:
+# # Здеесь мы будем фиксировать логирования, когда DEBUG = True
+# # 'require_debug_true': {
+# #             '()': 'django.utils.log.RequireDebugTrue',}
+#
+# # А здесь сообщаем куда будем записывать логи (файл log):
+# # 'filename': BASE_DIR.joinpath('log/application.log'),
+#
+# # Если DEBUG = False и мы уже на боевом сервере, перешли в продакшн,
+# # файл log (кужа мы бцдем записывать логи) всё равно должен быть
+#
+# # Steps:
+# # 1. Добавляешь этот набор настроек в файл settings.py
+# # 2. Корректируешь там, то что нужно (в этом варианте всё необходимое уже есть)
+# # 3. Создаешь на уровне приложения папку log, и помещаешь туда пустой файл empty.txt (можно не совсем пустой)
+# # 4. Наслаждаешься логгированием, если DEBUG = True
+#
+# # -------------------------------------------------------- LOGGING settings
 
