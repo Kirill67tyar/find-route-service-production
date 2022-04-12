@@ -1,0 +1,10 @@
+{% extends 'base.html' %}
+
+{% block title %}Поздравляем{% endblock %}
+
+{% block content %}
+
+<h3>Поздравляем <strong>{{ new_user.username }}</strong>, регистрация прошла успешно</h3>
+<br>
+Теперь, вы новый пользователь нашего сайта и можете <a href="{% url 'accounts:login' %}">войти</a>
+{% endblock %}

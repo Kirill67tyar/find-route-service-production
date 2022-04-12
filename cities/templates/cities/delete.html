@@ -1,0 +1,12 @@
+{% extends 'base.html' %}
+
+<!-- этот delete.html не используется, в обработчике он закоменчен -->
+
+{% block title %}
+Удаление города
+{% endblock %}
+
+{% block content %}
+<p>Вы уверены, что хотите удалить город {{ object.name }}?</p>
+{% include '_inc/form.html' with button='Удалить' %}
+{% endblock %}

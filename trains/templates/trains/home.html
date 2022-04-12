@@ -1,0 +1,48 @@
+{% extends 'base.html' %}
+
+{% block title %}Список поездов{% endblock %}
+
+{% block content %}
+<h3>Список поездов</h3>
+<table class="table table-striped table-hover">
+    <tr>
+        <th>№ поезда</th>
+        <th>Откуда</th>
+        <th>Куда</th>
+        <th>Время отправки</th>
+        <th>Время прибытия</th>
+        <th>Время в пути</th>
+        {% if user.is_authenticated %}
+        <th>&nbsp;</th>
+        <th>&nbsp;</th>
+        {% endif %}
+    </tr>
+    {% for object in page_obj %}
+    <tr>
+        <td>
+
+            <a href="{% url 'trains:detail' pk=object.pk %}">
+                <p class="fs-5 fw-normal">{{ object.name }}</p>
+            </a>
+        </td>
+        <td>{{ object.from_city }}</td>
+        <td>{{ object.to_city }}</td>
+        <td>{{ object.departure_time|date:"D d M Y" }}</td>
+        <td>{{ object.arrival_time|date:"D d M Y" }}</td>
+        <td>{{ object.travel_time }}</td>
+        {% if user.is_authenticated %}
+        <td>
+            {% url 'trains:update' pk=object.pk as update %}
+            {% include '_inc/actions/update.html' with action=update %}
+
+        </td>
+        <td>
+            {% url 'trains:delete' pk=object.pk as delete %}
+            {% include '_inc/actions/delete.html' with action=delete %}
+        </td>
+        {% endif %}
+    </tr>
+    {% endfor %}
+
+</table>
+{% endblock %}

@@ -1,0 +1,75 @@
+{% extends 'base.html' %}
+
+{% block title %}
+Поиск маршрута
+{% endblock %}
+
+{% block content %}
+{% if routes %}
+{% with cities.from_city as from_city %}
+{% with cities.to_city as to_city %}
+<h4>
+    Маршрут{% if routes|length != 1 %}ы{% endif %} из города
+    <u>{{ from_city.name }}</u>
+    в город
+    <u>{{ to_city.name }}</u>
+</h4>
+{% for route in routes %}
+<form action="{% url 'add-route' %}" method="POST">{% csrf_token %}
+    <input type="hidden" name="from_city" value="{{ from_city.pk }}">
+    <input type="hidden" name="to_city" value="{{ to_city.pk }}">
+    <input type="hidden" name="total_time" value="{{ route.total_time }}">
+    <input type="hidden" name="trains" value="{% for train in route.trains %}{{ train.pk }},{% endfor %}">
+    <br><br>
+    <h5>Общее время в пути: {{ route.total_time }}
+        {% if forloop.counter == 1 %}
+        &nbsp;(самый быстрый)
+        {% endif %}</h5>
+    <table class="table">
+        <thead>
+        <tr>
+            <th scope="col">#</th>
+            <th scope="col">Список поездов по этому маршруту</th>
+            <th scope="col">Время</th>
+        </tr>
+        </thead>
+        <tbody>
+        {% for train in route.trains %}
+        <tr>
+            <th scope="row">{{ forloop.counter }}</th>
+            <td>Поезд &nbsp;<strong>{{ train.name }}</strong> &nbsp;&nbsp; {{ train.from_city }}
+                <i class="fa fa-long-arrow-right" aria-hidden="true"></i> {{ train.to_city }}
+            </td>
+            <!--      <i class="fa fa-arrow-right" aria-hidden="true"></i>-->
+            <td>{{ train.travel_time }}</td>
+        </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+    <button class="btn btn-primary">Сохранить</button>
+</form>
+{% endfor %}
+{% endwith %}
+{% endwith %}
+{% else %}
+<h3>Поиск маршрута</h3>
+{% endif %}
+{% url 'find-route' as action %}
+{% include '_inc/form.html' with button='Найти' action=action %}
+{% endblock %}
+
+<!--
+context = {
+        'cities': {
+            'from_city': from_city,  # модель города
+            'to_city': to_city,  # модель города
+        },
+        'form': form,
+        'routes': sorted_routes,
+        # routes -- [
+        #           { 'trains': [{'id': 6, 'name': 't51',...}, ...],
+        #             'total_time': n, },
+        #           { 'trains': ...}
+        #           ]
+    }
+-->

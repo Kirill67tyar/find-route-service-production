@@ -1,0 +1,48 @@
+{% extends 'base.html' %}
+
+{% block title %}
+
+{% if object %}
+город {{object}}
+{% else %}
+город не найден
+{% endif %}
+
+{% endblock %}
+
+{% block content %}
+<h3>город</h3>
+<div class="row">
+    <div class="col-md">
+        {% if object %}
+        <p>{{object}}</p>
+        {% else %}
+        <p>город не найден</p>
+        {% endif %}
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-md-12">
+        <a href="{% url 'cities:home' %}">
+            <button type=button class="btn btn-outline-primary">
+                На главную
+            </button>
+        </a>
+        |
+        <a href="{% url 'cities:update' pk=object.pk %}">
+            <button type=button class="btn btn-outline-primary">
+                Редактировать
+            </button>
+        </a>
+        |
+        <a href="{% url 'cities:delete' pk=object.pk %}">
+            <button type=button class="btn btn-outline-danger">
+                Удалить
+            </button>
+        </a>
+    </div>
+</div>
+
+<br>
+{% endblock %}

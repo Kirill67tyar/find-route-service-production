@@ -1,0 +1,30 @@
+{% extends 'base.html' %}
+
+{% block title %}Список маршрутов{% endblock %}
+
+{% block content %}
+<h3>Список маршрутов</h3>
+<table class="table table-striped table-hover">
+    <tr>
+        <th>Маршрут</th>
+        <th>Откуда</th>
+        <th>Куда</th>
+        <th>Время в пути</th>
+    </tr>
+    {% for object in page_obj %}
+    <tr>
+        <td>
+            <a href="{% url 'detail' pk=object.pk %}">
+                <p class="fs-5 fw-normal">{{ object.name }}</p>
+            </a>
+        </td>
+        <td>{{ object.from_city }}</td>
+        <td>{{ object.to_city }}</td>
+        <td>{{ object.travel_times }}</td>
+
+
+    </tr>
+    {% endfor %}
+
+</table>
+{% endblock %}

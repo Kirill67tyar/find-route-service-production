@@ -1,0 +1,38 @@
+{% extends 'base.html' %}
+
+{% block title %}Список городов{% endblock %}
+
+{% block content %}
+
+
+<h3>Список городов</h3>
+<table class="table table-striped table-hover">
+    {% for object in page_obj %}
+    <tr>
+        <td>
+            <a href="{% url 'cities:detail' pk=object.pk %}">
+                <p class="fs-5 fw-normal">{{ object.name }}</p>
+            </a>
+        </td>
+        {% if user.is_authenticated %}
+        <td>
+            {% url 'cities:update' pk=object.pk as update %}
+            {% include '_inc/actions/update.html' with action=update %}
+
+        </td>
+        <td>
+            {% url 'cities:delete' pk=object.pk as delete %}
+            {% include '_inc/actions/delete.html' with action=delete %}
+        </td>
+        {% else %}
+        &nbsp;
+        &nbsp;
+        {% endif %}
+    </tr>
+    {% endfor %}
+</table>
+
+<!-- если подключать пагинацию не на базовой странице, а здесь-->
+<!--{# include '_inc/pagination.html' #}-->
+
+{% endblock %}

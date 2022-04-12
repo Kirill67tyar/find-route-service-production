@@ -1,0 +1,55 @@
+{% if page_obj %}
+{% with page_obj.paginator.num_pages as total_number_of_pages %}
+<br>
+<nav aria-label="Page navigation example">
+    <ul class="pagination justify-content-center">
+
+        <!--        кнопка на первую-->
+        <li class="page-item {% if page_obj.number == 1 %}disabled{% endif %}">
+            <a class="page-link"
+               href="?page=1">На первую</a>
+        </li>
+        &nbsp;&nbsp;&nbsp;
+
+        <!--        кнопка на предыдущую-->
+        {% if page_obj.has_previous %}
+        <li class="page-item">
+            <a class="page-link" href="?page={{ page_obj.previous_page_number  }}" aria-label="Previous">
+                <span aria-hidden="true">&laquo;</span>
+            </a>
+        </li>
+        {% endif %}
+
+        <!--        три первые и три последние страницы -->
+        {% for page in page_obj.paginator.page_range %}
+
+        {% if page_obj.number == page %}
+        <li class="page-item active"><a class="page-link" href="#">{{page}}</a></li>
+
+        {% elif page > page_obj.number|add:-3 and page < page_obj.number|add:3 %}
+        <li class="page-item"><a class="page-link"
+                                 href="?page={{page}}">{{page}}</a></li>
+
+        {% endif %}
+        {% endfor %}
+
+        <!--        кнопка на следующую-->
+        {% if page_obj.has_next %}
+        <li class="page-item">
+            <a class="page-link" href="?page={{ page_obj.next_page_number  }}" aria-label="Next">
+                <span aria-hidden="true">&raquo;</span>
+            </a>
+        </li>
+        {% endif %}
+
+        <!--        кнопка на последнюю-->
+        &nbsp;&nbsp;&nbsp;
+        <li class="page-item {% if page_obj.number == total_number_of_pages %}disabled{% endif %}">
+            <a class="page-link"
+               href="?page={{ total_number_of_pages }}">На последнюю</a>
+        </li>
+
+    </ul>
+</nav>
+{% endwith %}
+{% endif %}
